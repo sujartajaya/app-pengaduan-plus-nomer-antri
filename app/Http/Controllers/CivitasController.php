@@ -44,7 +44,7 @@ class CivitasController extends Controller
         $civitas = Civitas::create($validate);
 
         if ($civitas) {
-            return $civitas;
+            return redirect('/civitas/profile');
         }
 
         return dd('Gagal daftar!');
@@ -119,7 +119,29 @@ class CivitasController extends Controller
     }
 
     public function post()
-    {
+    {   
+        if (Auth::check()) {
+            //return view('welcome');
+            $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+            $stdjson = json_encode($civitas);
+            $data = json_decode($stdjson);
+            if (Auth::user()->type == 'civitas') {
+                if (empty($data)) {
+                    /** dijalankan jika pendaftaran student belum lengkap setelah sigup */
+                    $name = Auth::user()->name;
+                    /** view complate form register */
+                    return view('civitas.register',compact('name'));
+                    //dd('Data perlu dilengkapi');
+                }
+                /** view profile civitas */
+                //return redirect('/civitas/profile');
+            } else {
+                /** redirect admin */
+            }
+            
+        }else{
+            return redirect('/user/login');
+        }
         $categories = Category::all();
         return view('civitas.post',compact('categories'));
     }

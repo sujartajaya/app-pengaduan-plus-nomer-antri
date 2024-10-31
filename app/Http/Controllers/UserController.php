@@ -71,7 +71,7 @@ class UserController extends Controller
         if ($user) {
             /** setelah daftar user disuruh login pake email dan password yang baru didaftar */
             //return view('login.index')->with('message','Please login using your email and password!');
-            return $user;
+            return redirect('/');
         } 
 
         return dd('Gagal daftar!');

@@ -20,7 +20,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -28,7 +28,12 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $datavalidate =  $request->validate([
+            'title' => ['required'],
+            'slug' => ['required','unique:posts'],
+            'post' => ['required'],
+            'photo' => ['required','image','mimes:jpeg,png,jpg,gif','max:2048']
+        ]);
     }
 
     /**

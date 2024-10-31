@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CivitasController;
-
-
+use App\Http\Controllers\PostController;
 
 Route::get('/',[UserController::class,'index']);
 Route::get('/user/register',[UserController::class,'create'])->name('register');
@@ -23,6 +22,7 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     return view('civitas.photo');
     });
     Route::get('/post',[CivitasController::class,'post']);
+    Route::post('/post',[PostController::class,'store']);
 });
 
 Route::middleware('civitas')->prefix('user')->group(function () {

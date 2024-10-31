@@ -1,0 +1,75 @@
+services:
+  app:
+    build:
+      args:
+        user: pkl
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: pkl
+    container_name: pkl-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    environment:
+      DB_HOST: db
+      DB_USER: 'root'
+      DB_PASSWORD: 'admin#2024'
+      DB_NAME: pkl_db
+      DB_PORT: 3306
+      DB_CONNECTION_LIMIT: 10
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - localnet
+
+  db:
+    image: mysql:8.0
+    container_name: pkl-db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: pkl_db
+      MYSQL_ROOT_PASSWORD: admin#2024
+      MYSQL_PASSWORD: sdmin#2024
+      MYSQL_USER: admin
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - datamysql:/var/lib/mysql
+    networks:
+      - localnet
+
+  nginx:
+    image: nginx:alpine
+    container_name: pkl-nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/conf.d/
+    networks:
+      - localnet
+
+  phpmyadmin:
+      image: phpmyadmin
+      container_name: pkl-phpmyadmin
+      restart: always
+      ports:
+        - 8080:80
+      environment:
+        - PMA_HOST=db
+      networks:
+        - localnet
+
+volumes:
+  datamysql:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/sujarta/data/antrian
+      
+networks:
+  localnet:
+    driver: bridge

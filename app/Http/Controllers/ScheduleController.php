@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Schedule;
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class ScheduleController extends Controller
@@ -61,5 +63,12 @@ class ScheduleController extends Controller
     public function destroy(Schedule $schedule)
     {
         //
+    }
+
+    public function pilihJadwal($uuid)
+    {
+        $post = Post::where('uuid',$uuid)->get()->first();
+        $categories = Category::all();
+        return view('schedule.view',compact('post','categories'));
     }
 }

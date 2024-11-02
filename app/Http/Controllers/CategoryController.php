@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Civitas;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
@@ -36,7 +38,18 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        //
+        $dataposts = Category::with(['post' => function($q) {
+            $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+            $q->where('civitas_id',$civitas->id)->orderBy('created_at','asc');
+        } ])->get();
+        // foreach ($categories as $category) {
+        //     $post = $category->post;
+        //     if (count($post)) {
+        //         echo $category->category."<br>";
+        //         echo $post."<br>";
+        //     }
+        // }
+        return view('civitas.view01',compact($dataposts));
     }
 
     /**
@@ -62,4 +75,6 @@ class CategoryController extends Controller
     {
         //
     }
+
+
 }

@@ -14,7 +14,7 @@
                     </div>
                     <div class="md:mt-1 mt-2">
                         <label for="category" class="mb-2 text-sm font-medium text-gray-900">Category : </label><br>
-                        <select id="category" name="category" class=" w-[100%] px-4 py-2 mt-1 rounded-xl dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <select id="category" name="category_id" class=" w-[100%] px-4 py-2 mt-1 rounded-xl dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         @if (isset($categories))    
                         @foreach ($categories as $category)
                             <option value="{{ $category->id}}">{{ $category->category }}</option>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="md:mt-1 mt-2">
-                        <div id="image-preview" class="w-[27%] p-6 bg-gray-100 border-dashed border-2 border-gray-400 rounded-lg  text-center cursor-pointer">
+                        <div id="image-preview" class="p-6 bg-gray-100 border-dashed border-2 border-gray-400 rounded-lg  text-center cursor-pointer">
                             <label for="upload" class="cursor-pointer">
                                 <h5 class="mb-2 text-xl font-bold tracking-tight text-gray-700">Upload picture</h5>
                                     <p class="font-normal text-sm text-gray-400 md:px-6">Choose photo size should be less than <b class="text-gray-600">2mb</b></p>

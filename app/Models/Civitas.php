@@ -20,4 +20,9 @@ class Civitas extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function post(): HasMany
+    {
+        return $this->hsMany(Post::class);
+    }
 }

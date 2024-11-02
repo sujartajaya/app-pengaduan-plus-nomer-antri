@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CivitasController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ScheduleController;
+
 
 Route::get('/',[UserController::class,'index']);
 Route::get('/user/register',[UserController::class,'create'])->name('register');
@@ -22,7 +25,12 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     return view('civitas.photo');
     });
     Route::get('/post',[CivitasController::class,'post']);
+    Route::get('/view/posts',[PostController::class,'show']);
     Route::post('/post',[PostController::class,'store']);
+    Route::get('/post/photo/{uuid}',[PostController::class,'editPhoto']);
+    Route::post('/post/photo/{uuid}',[PostController::class,'editPhoto']);
+    Route::get('/post/schedule/{uuid}',[ScheduleController::class,'pilihJadwal']);
+    
 });
 
 Route::middleware('civitas')->prefix('user')->group(function () {

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Civitas;
 use App\Models\Category;
+use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -142,7 +143,24 @@ class CivitasController extends Controller
         }else{
             return redirect('/user/login');
         }
+
+        /** cek apakah sebelumnya civitas sdh ada posting data yang belum dijadwal */
+        $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+        $posts = Post::where('civitas_id',$civitas->id)->where('schedule','false')->get();
+        
+        $datapost = json_encode($posts);
+        $dataposts = json_decode($datapost);
+
+        // if (empty($dataposts)) {
+        //     $categories = Category::all();
+        //     return view('civitas.post',compact('categories'));
+        // } else {
+        //     //return $posts;
+        //     return view('civitas.view01',compact('dataposts'));
+        // }
+        
         $categories = Category::all();
         return view('civitas.post',compact('categories'));
+       
     }
 }

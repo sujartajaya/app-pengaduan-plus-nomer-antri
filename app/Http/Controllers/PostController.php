@@ -60,13 +60,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
         $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
-        $posts = Post::where('civitas_id',$civitas->id)->get();
-        $queues = Queue::with(['post', function($q) use($civitas) {
-            $q->where('civitas_id',$civitas->id);
-        }])->with('schedule')->get();
+        $posts = Post::with(['queue'])->where('civitas_id',$civitas->id)->get();
         //return count($queues);
-
-        return view('post.view',compact('queues','categories','posts'));
+        return view('post.view',compact('categories','posts'));
     }
 
     /**

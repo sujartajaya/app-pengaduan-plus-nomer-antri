@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Civitas;
+use App\Models\Queue;
+use App\Models\Post;
+use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -76,5 +79,19 @@ class CategoryController extends Controller
         //
     }
 
-
+    public function showPostByCategory($uuid)
+    {
+        $datapost = Post::where('uuid',$uuid)->get()->first();
+        $category = Category::with(['post' => function($q) use($uuid) {
+            $q->where('uuid',$uuid)->first();
+        }])->where('id',$datapost->category_id)->get()->first();
+        
+        $queue = Queue::where('post_id',$datapost->id)->get()->first();
+        
+        if ($queue) {
+            $jadwal = Schedule::where('id',$queue->schedule_id)->get()->first();
+        } else $jadwal = null;
+        //return $cateegory->post[0];
+        return view('post.viewbycategory',compact('category','queue','jadwal'));
+    }
 }

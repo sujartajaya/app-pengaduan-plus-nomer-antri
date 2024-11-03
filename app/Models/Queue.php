@@ -21,6 +21,6 @@ class Queue extends Model
 
     public function schedule(): BelongsTo
     {
-        return $this->belongsTo(Schedule::class);
+        return $this->belongsTo(Schedule::class,'schedule_id');
     }
 }

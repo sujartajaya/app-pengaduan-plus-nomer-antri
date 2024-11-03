@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Schedule extends Model
 {
@@ -13,6 +14,6 @@ class Schedule extends Model
 
     public function queue(): HasMany
     {
-        return $this->hasMany(Queue::class);
+        return $this->hasMany(Queue::class,'schedule_id');
     }
 }

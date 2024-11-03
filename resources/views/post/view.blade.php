@@ -31,38 +31,24 @@
                                     ?>
                                 </p>
                                 <p class="text-gray-700 text-sm">{{ $post->post }}</p>
-                                <div class="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-5 px-20 rounded-lg shadow-md relative">
-                                    <?php
-                                        $dataq = "";
-                                        if (count($queues) == 0) {
-                                            echo "Null";
-                                        } else {
-                                            foreach ($queues as $queue) {
-                                                if ($queue->post_id == $post->id) {
-                                                    echo $queue->number;
-                                                    $dataq = $queue;
-                                                    exit;
-                                                }
-                                                echo "Null";
-                                            }
-                                        }
-                                    ?>
+                                <a href="/civitas/post/schedule/{{ $post->uuid }}">
+                                <div class="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-5 px-20 rounded-lg shadow-md relative cursor-pointer">
+                                    @if ($post->schedule == 'false')
+                                        <p>Belum dijadwal</p>  
+                                    @else
+                                        <p>{{ $post->queue->number }}</p>
+                                    @endif
+
                                     <div class="w-4 h-4 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-3 -ml-6"></div>
                                     <div class="w-4 h-4 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-3 -mr-6"></div>
                                 </div>
-                                
+                                </a>
                             </div>
                             <div class="flex gap-2 px-2">
                                 <a href="/civitas/post/edit/{{ $post->uuid }}"
                                 class="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 text-center">
                                 Edit
                                 </a>
-                                @if ($dataq == "")
-                                <a href="/civitas/post/schedule/{{ $post->uuid }}" 
-                                class="flex-1 rounded-full border-2 bg-red-600 border-gray-400 dark:border-gray-700 font-semibold text-white dark:text-white px-4 py-2 hover:bg-red-800 text-center">
-                                Jadwal
-                                </a>
-                                @endif
                             </div>
                         </div>
                     </div>

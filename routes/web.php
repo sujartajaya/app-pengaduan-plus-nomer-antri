@@ -29,7 +29,8 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::post('/post',[PostController::class,'store']);
     Route::get('/post/photo/{uuid}',[PostController::class,'editPhoto']);
     Route::post('/post/photo/{uuid}',[PostController::class,'editPhoto']);
-    Route::get('/post/schedule/{uuid}',[ScheduleController::class,'pilihJadwal']);
+    Route::get('/post/schedule/{uuid}',[CategoryController::class,'showPostByCategory']);
+    Route::post('/post/schedule/{uuid}',[ScheduleController::class,'update']);
     
 });
 

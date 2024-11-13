@@ -59,11 +59,36 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        $categories = Category::all();
-        $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
-        $posts = Post::with(['queue'])->where('civitas_id',$civitas->id)->get();
-        //return count($queues);
-        return view('post.view',compact('categories','posts'));
+
+        if (Auth::check()) {
+            //return view('welcome');
+            $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+            $stdjson = json_encode($civitas);
+            $data = json_decode($stdjson);
+            if (Auth::user()->type == 'civitas') {
+                if (empty($data)) {
+                    /** dijalankan jika pendaftaran student belum lengkap setelah sigup */
+                    $name = Auth::user()->name;
+                    /** view complate form register */
+                    return view('civitas.register',compact('name'));
+                    //dd('Data perlu dilengkapi');
+                }
+                /** view profile civitas */
+                //return redirect('/civitas/profile');
+            } else {
+                /** view civitas posts */
+                $categories = Category::all();
+                $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+                $posts = Post::with(['queue'])->where('civitas_id',$civitas->id)->get();
+                //return count($queues);
+                return view('post.view',compact('categories','posts'));
+            }
+            
+        }else{
+            return redirect('/user/login');
+        }
+
+        
     }
 
     /**

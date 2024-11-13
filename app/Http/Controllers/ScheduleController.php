@@ -74,7 +74,7 @@ class ScheduleController extends Controller
             $jadwal = Schedule::create($validate);
             $str = str_replace('-','',$jadwal->tanggal);
             $noantre = $str.'00001';
-            
+            $dataq['tanggal'] = $jadwal->tanggal;
             $dataq['schedule_id'] = $jadwal->id;
             $dataq['post_id'] = $post->id;
             $dataq['civitas_id'] = $post->civitas_id;
@@ -101,7 +101,7 @@ class ScheduleController extends Controller
                 }
                 $noantre = $str.$noid.$totnumb;
             }
-
+            $dataq['tanggal'] = $jadwal->tanggal;
             $dataq['schedule_id'] = $jadwal->id;
             $dataq['post_id'] = $post->id;
             $dataq['civitas_id'] = $post->civitas_id;

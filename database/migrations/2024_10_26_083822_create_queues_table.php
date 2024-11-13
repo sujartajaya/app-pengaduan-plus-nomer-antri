@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('queues', function (Blueprint $table) {
             $table->id();
+            $table->date('tanggal');
             $table->foreignId('schedule_id')->constrained()->on('schedules')->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->on('posts')->onDelete('cascade');
             $table->foreignId('civitas_id')->constrained()->on('civitas')->onDelete('cascade');

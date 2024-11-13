@@ -2,12 +2,13 @@
     use App\Models\Schedule;
     use App\Models\Queue;
     use App\Models\Civitas;
-
-    $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
-    $today = date('Y-m-d');
-    $jadwal = Schedule::where('tanggal','2024-11-14')->get()->first();
-    if ($jadwal) {
-        $notif = Queue::where('schedule_id',$jadwal->id)->where('status','open')->where('civitas_id',$civitas->id)->count();
+    if (Auth::check()) {
+        $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+        $today = date('Y-m-d');
+        $jadwal = Schedule::where('tanggal',)->get()->first();
+        if ($jadwal) {
+            $notif = Queue::where('schedule_id',$jadwal->id)->where('status','open')->where('civitas_id',$civitas->id)->count();
+        }
     }
  ?>
 <!doctype html>

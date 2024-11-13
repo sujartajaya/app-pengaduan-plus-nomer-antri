@@ -52,7 +52,7 @@ class CategoryController extends Controller
         //         echo $post."<br>";
         //     }
         // }
-        return view('civitas.view01',compact($dataposts));
+        return view('civitas.view01',compact('dataposts'));
     }
 
     /**

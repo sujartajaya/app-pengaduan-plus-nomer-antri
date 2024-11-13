@@ -33,19 +33,28 @@
                                     <div class="w-4 h-4 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-3 -mr-6"></div>
                                 </div>
                                 <p>&nbsp;</p>
+                                @if(!$queue)
                                 <p class="text-gray-700 text-sm">Silakan pilih tanggal untuk mendapatkan nomer antre:</p>
                             <form action="/civitas/post/schedule/{{$category->post[0]->uuid}}" method="post">
                                 @csrf
                                     <input type="date" name="tanggal" class="w-[100%] px-4 py-2 mt-1 rounded-xl dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500 bg-gray-800 text-white" autofocus value="{{ old('tanggal') }}">
                                      @error('tanggal')
                                      <div class="invalid block text-sm font-medium text-red-700 dark:text-red-600 mb-2">{{$message}}</div>
-                        @enderror
+                                    @enderror
+                                @endif    
                             </div>
                             <div class="flex gap-2 px-2">
+                                @if ($queue)
+                                <a href="/civitas/view/posts"
+                                class="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 text-center" >
+                                Close
+                                </a>
+                                @else
                                 <button type="submit"
                                 class="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 text-center" <?php if ($queue) echo "disabled" ?> >
                                 Update
                                 </button>
+                                @endif
                             </div>
                             </form>
                         </div>

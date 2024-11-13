@@ -23,8 +23,16 @@
                         </select>
                     </div>
 
+                    <div class="mt-5">
+                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Complaint description</label>
+                        <textarea name="post" id="message" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+                        @error('post')
+                            <div class="invalid block text-sm font-medium text-red-700 dark:text-red-600 mb-2">{{$message}}</div>
+                        @enderror
+                    </div>
+
                     <div class="md:mt-1 mt-2">
-                        <label class="mb-2 text-sm font-medium text-gray-900" for="file_input">Upload file</label>
+                        <label class="mb-2 text-sm font-medium text-gray-900" for="file_input">Upload error file</label>
                             <input id="upload" class="block text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" name="photo">
                             @error('photo')
                             <div class="invalid block text-sm font-medium text-red-700 dark:text-red-600 mb-2">{{$message}}</div>
@@ -41,14 +49,9 @@
                             </label>
                         </div>
                     </div>
-
-                    <div class="mt-5">
-                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900">Your message</label>
-                        <textarea name="post" id="message" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
-                        @error('post')
-                            <div class="invalid block text-sm font-medium text-red-700 dark:text-red-600 mb-2">{{$message}}</div>
-                        @enderror
-                    </div>
+                    
+                   
+                    
                 </div>
 
                 <div class="btn mt-2 w-[100%] bg-transparent flex items-center">

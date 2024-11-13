@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('schedule_id')->constrained()->on('schedules')->onDelete('cascade');
             $table->foreignId('post_id')->constrained()->on('posts')->onDelete('cascade');
+            $table->foreignId('civitas_id')->constrained()->on('civitas')->onDelete('cascade');
             $table->string('number')->unique(); /** kombinasi tanggal dan nomer urut 20241031000001 */
             $table->enum('status',['open','close','cancel'])->default('open');
             $table->enum('checkin',['true','false'])->default('false');

@@ -24,11 +24,11 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::get('/photo', function () {
     return view('civitas.photo');
     });
-    Route::get('/post',[CivitasController::class,'post']);
-    Route::get('/view/posts',[PostController::class,'show']);
+    Route::get('/post',[CivitasController::class,'post']); /** form new post */
+    Route::get('/view/posts',[PostController::class,'show']); /** view civitas post */
     Route::post('/post',[PostController::class,'store']);
     Route::get('/post/photo/{uuid}',[PostController::class,'editPhoto']);
-    Route::post('/post/photo/{uuid}',[PostController::class,'editPhoto']);
+    Route::post('/post/photo/{uuid}',[PostController::class,'savePhoto']);
     Route::get('/post/schedule/{uuid}',[CategoryController::class,'showPostByCategory']);
     Route::post('/post/schedule/{uuid}',[ScheduleController::class,'update']);
     

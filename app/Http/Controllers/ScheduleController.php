@@ -77,6 +77,7 @@ class ScheduleController extends Controller
             
             $dataq['schedule_id'] = $jadwal->id;
             $dataq['post_id'] = $post->id;
+            $dataq['civitas_id'] = $post->civitas_id;
             $dataq['number'] = $noantre;
 
             $queue = Queue::create($dataq);
@@ -103,6 +104,7 @@ class ScheduleController extends Controller
 
             $dataq['schedule_id'] = $jadwal->id;
             $dataq['post_id'] = $post->id;
+            $dataq['civitas_id'] = $post->civitas_id;
             $dataq['number'] = $noantre;
 
             $queue = Queue::create($dataq);
@@ -126,5 +128,10 @@ class ScheduleController extends Controller
         $post = Post::where('uuid',$uuid)->get()->first();
         $categories = Category::all();
         return view('schedule.view',compact('post','categories'));
+    }
+
+    public function ambilAntrian()
+    {
+        $jadwal = Schedule::with(['queue' => function($q) { $q->where('status','open')->where('checkin','false')->orderBy('id','ASC');}])->where('tanggal', '<=','2024-11-12')->orderBy('tanggal','ASC')->get();
     }
 }

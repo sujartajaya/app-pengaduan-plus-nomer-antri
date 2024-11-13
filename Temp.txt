@@ -1,0 +1,22 @@
+$jadwal->with(['queue' => function($q) { $q->where('status','open')->where('checkin','false')->orderBy('id','ASC'); }])->where('tanggal','<=','2024-11-12')->orderBy('tanggal','ASC')->get();
+
+
+=========================================================
+INSERT INTO `categories` ( `category`) VALUES
+('USDI Care'),
+('PEMIRA 120'),
+('BIMBINGAN KONSELING'),
+('Blog Mahasiswa'),
+('E-Perpus'),
+('KKN UNUD'),
+('Kuisioner-NG'),
+('MISTIK'),
+('Orientasi'),
+('Peminjaman Room Webex'),
+('SIM Laboratorium'),
+('SIMAK'),
+('siSAKTI'),
+('siSAKTI-NG'),
+('UKT Ku'),
+('MBKM');
+========================================================

@@ -25,4 +25,9 @@ class Civitas extends Model
     {
         return $this->hsMany(Post::class);
     }
+
+    public function queue(): HasMany
+    {
+        return $this->hasMany(Queue::class);
+    }
 }

@@ -36,7 +36,10 @@ class QueueController extends Controller
      */
     public function show(Queue $queue)
     {
-        //
+        date_default_timezone_set("Asia/Bangkok");
+        $tanggal = date('Y-m-d');
+        $antrian = $queue->where('tanggal','<=',$tanggal)->where('status','open')->where('checkin','false')->get();
+        return $antrian;
     }
 
     /**

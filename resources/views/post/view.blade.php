@@ -53,6 +53,10 @@
                         </div>
                     </div>
                     @endforeach
+                    
                 </div>
+            </div>
+            <div class="mt-1 p-1 flex-60 has-text-centered">
+                {{ $posts->links() }}
             </div>
     @endsection

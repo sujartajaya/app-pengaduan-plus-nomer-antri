@@ -94,4 +94,10 @@ class CategoryController extends Controller
         //return $cateegory->post[0];
         return view('post.viewbycategory',compact('category','queue','jadwal'));
     }
+
+    public function test()
+    {
+        $category = Category::paginate(30);
+        return $category;
+    }
 }

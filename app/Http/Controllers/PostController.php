@@ -77,34 +77,43 @@ class PostController extends Controller
                 //return redirect('/civitas/profile');
             } else {
                 /** view civitas posts */
-                $categories = Category::all();
-                $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
-                $posts = Post::with(['queue'])->where('civitas_id',$civitas->id)->get();
-                //return count($queues);
-                return view('post.view',compact('categories','posts'));
+               
             }
             
         }else{
             return redirect('/user/login');
         }
-
+        $categories = Category::all();
+        $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+        $posts = Post::with(['queue'])->where('civitas_id',$civitas->id)->paginate(15);
+        //return count($queues);
+        return view('post.view',compact('categories','posts'));
         
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(Post $post, $uuid)
     {
-
+        $datapost = $post->where('uuid',$uuid)->get()->first();
+        $categories = Category::all();
+        return view('post.edit',compact('categories','datapost'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, Post $post, $uuid)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'sometimes|string',
+            'category_id' => 'sometimes|integer',
+            'post' => 'sometimes|string',
+            // Additional validation rules for partial updates
+        ]);
+        $post->where('uuid',$uuid)->update($validatedData);
+        return redirect('/civitas/view/posts');
     }
 
     /**

@@ -14,7 +14,7 @@ services:
       DB_HOST: db
       DB_USER: 'root'
       DB_PASSWORD: 'admin#2024'
-      DB_NAME: pkl_db
+      DB_NAME: pkl_db_antrian
       DB_PORT: 3306
       DB_CONNECTION_LIMIT: 10
     volumes:
@@ -28,12 +28,14 @@ services:
     container_name: pkl-db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: pkl_db
+      MYSQL_DATABASE: pkl_db_antrian
       MYSQL_ROOT_PASSWORD: admin#2024
       MYSQL_PASSWORD: sdmin#2024
       MYSQL_USER: admin
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
+    ports:
+      - 3306:3306
     volumes:
       - datamysql:/var/lib/mysql
     networks:

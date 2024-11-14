@@ -6,6 +6,7 @@ use App\Http\Controllers\CivitasController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ScheduleController;
+use App\Http\Controllers\QueueController;
 
 
 Route::get('/',[UserController::class,'index']);
@@ -22,7 +23,7 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::get('/edit',[CivitasController::class,'edit']);
     Route::patch('/edit',[CivitasController::class,'update']);
     Route::get('/photo', function () {
-    return view('civitas.photo');
+        return view('civitas.photo');
     });
     Route::get('/post',[CivitasController::class,'post']); /** form new post */
     Route::get('/view/posts',[PostController::class,'show']); /** view civitas post */
@@ -31,7 +32,8 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::post('/post/photo/{uuid}',[PostController::class,'savePhoto']);
     Route::get('/post/schedule/{uuid}',[CategoryController::class,'showPostByCategory']);
     Route::post('/post/schedule/{uuid}',[ScheduleController::class,'update']);
-    
+    Route::get('/post/edit/{uuid}',[PostController::class,'edit']);
+    Route::patch('/post/edit/{uuid}',[PostController::class,'update']);
 });
 
 Route::middleware('civitas')->prefix('user')->group(function () {
@@ -40,3 +42,6 @@ Route::middleware('civitas')->prefix('user')->group(function () {
     });
     Route::post('/password',[UserController::class,'update']);
 });
+
+/** testting route for limit */
+Route::get('/antri',[QueueController::class,'show']);

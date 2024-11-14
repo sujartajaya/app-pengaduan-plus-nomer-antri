@@ -4,11 +4,9 @@
     use App\Models\Civitas;
     if (Auth::check()) {
         $civitas = Civitas::where('user_id',Auth::user()->id)->get()->first();
+        date_default_timezone_set("Asia/Makassar");
         $today = date('Y-m-d');
-        $jadwal = Schedule::where('tanggal',)->get()->first();
-        if ($jadwal) {
-            $notif = Queue::where('schedule_id',$jadwal->id)->where('status','open')->where('civitas_id',$civitas->id)->count();
-        }
+        $notif = Queue::where('status','open')->where('civitas_id',$civitas->id)->where('tanggal',"<=",$today)->count();
     }
  ?>
 <!doctype html>

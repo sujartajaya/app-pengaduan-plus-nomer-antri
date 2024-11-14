@@ -34,6 +34,7 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::post('/post/schedule/{uuid}',[ScheduleController::class,'update']);
     Route::get('/post/edit/{uuid}',[PostController::class,'edit']);
     Route::patch('/post/edit/{uuid}',[PostController::class,'update']);
+    Route::get('/schedule/view',[QueueController::class,'show']);
 });
 
 Route::middleware('civitas')->prefix('user')->group(function () {
@@ -44,4 +45,6 @@ Route::middleware('civitas')->prefix('user')->group(function () {
 });
 
 /** testting route for limit */
-Route::get('/antri',[QueueController::class,'show']);
+Route::get('/display', function() {
+    return view('display.layar');
+});

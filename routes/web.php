@@ -35,6 +35,7 @@ Route::middleware('civitas')->prefix('civitas')->group(function () {
     Route::get('/post/edit/{uuid}',[PostController::class,'edit']);
     Route::patch('/post/edit/{uuid}',[PostController::class,'update']);
     Route::get('/schedule/view',[QueueController::class,'show']);
+    Route::get('/schedule/view/{id}',[QueueController::class,'displyById']);
 });
 
 Route::middleware('civitas')->prefix('user')->group(function () {

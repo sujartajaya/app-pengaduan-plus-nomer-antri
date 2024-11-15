@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Queue;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class QueueController extends Controller
@@ -36,10 +37,11 @@ class QueueController extends Controller
      */
     public function show(Queue $queue)
     {
-        date_default_timezone_set("Asia/Bangkok");
+        date_default_timezone_set("Asia/Makassar");
         $tanggal = date('Y-m-d');
         $antrian = $queue->where('tanggal','<=',$tanggal)->where('status','open')->where('checkin','false')->get();
-        return $antrian;
+        $count = 0;
+        return view('schedule.notif',compact('antrian','count'));
     }
 
     /**
@@ -64,5 +66,14 @@ class QueueController extends Controller
     public function destroy(Queue $queue)
     {
         //
+    }
+
+    public function displyById($id)
+    {
+        $antri = Queue::where('id',$id)->get()->first();
+        $post = Post::where('id',$antri->post_id)->get()->first();
+
+        $html = view('schedule.modal', compact('post'))->render();
+        return $html;
     }
 }

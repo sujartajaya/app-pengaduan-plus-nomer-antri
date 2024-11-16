@@ -1,43 +1,65 @@
 @extends('layout.app')
     @section('content')
-            <div class="flex justify-center items-center">
-            <table class="w-50% text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 shadow-md">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            #
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Tanggal
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Nomor Antri
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Action
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($antrian as $antri)
-                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                           {{ $count = $count + 1}}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ $antri->tanggal }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $antri->number }}
-                        </td>
-                        <td class="px-6 py-4">
-                            <a href="/civitas/schedule/view/{{ $antri->id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">View</a>
-                            &nbsp;
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Checkin</a>
-                        </td>
-                    </tr>
+        <div class="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16">
+                <div class="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-2 gap-10">
+                    <?php 
+                        use App\Models\Post;
+                        use App\Models\Category;
+
+                        $categories = Category::get();
+                     ?>
+                    @foreach ($antrian as $antri)
+                    <?php  
+                        $post = Post::where('id',$antri->post_id)->get()->first();
+                    ?>
+                    <div
+                        class="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r flex flex-col justify-between leading-normal">
+                        <div id="image-preview" class="p-6 bg-gray-100 border-dashed border-2 border-gray-400 text-center cursor-pointer">
+                            <img src="{{'/storage/'.$post->photo}}" class="max-h-48 mx-auto mb-3">
+                        </div>
+                        <div class="p-4 pt-2">
+                            <div class="mb-8">
+                                <p class="text-sm text-gray-600 flex items-center">
+                                    <svg class="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg"
+                                        viewBox="0 0 20 20">
+                                        <path
+                                            d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z">
+                                        </path>
+                                    </svg>
+                                    Members only
+                                </p>
+                                <a href="#" class="text-gray-900 font-bold text-lg mb-2 hover:text-indigo-600 inline-block">{{ $post->title }}</a>
+                                <p class="text-gray-700 font-bold text-lg">Category: 
+                                    <?php 
+                                        foreach ($categories as $category)
+                                        {
+                                            if ($category->id == $post->category_id) {
+                                                echo $category->category;
+                                            }
+                                        }
+                                    ?>
+                                </p>
+                                <p class="text-gray-700 text-sm">{{ $post->post }}</p>
+                                <div class="bg-gradient-to-br from-purple-600 to-indigo-600 text-white text-center py-5 px-20 rounded-lg shadow-md relative cursor-pointer">
+                                        <p>{{ $antri->number }}</p>  
+                                    <div class="w-4 h-4 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 left-3 -ml-6"></div>
+                                    <div class="w-4 h-4 bg-white rounded-full absolute top-1/2 transform -translate-y-1/2 right-3 -mr-6"></div>
+                                </div>
+                            </div>
+                            <form method="post" action="/civitas/checkin">
+                            @csrf
+                            <input type="hidden" name="antri_id" value="{{ $antri->id }}" />
+                            <div class="flex gap-2 px-2">
+                                <button type="submit"
+                                class="flex-1 rounded-full bg-blue-600 dark:bg-blue-800 text-white dark:text-white antialiased font-bold hover:bg-blue-800 dark:hover:bg-blue-900 px-4 py-2 text-center">
+                                Checkin!
+                                </button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
                     @endforeach
-                </tbody>
-            </table>
+                    
+                </div>
             </div>
     @endsection

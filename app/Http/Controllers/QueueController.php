@@ -40,8 +40,7 @@ class QueueController extends Controller
         date_default_timezone_set("Asia/Makassar");
         $tanggal = date('Y-m-d');
         $antrian = $queue->where('tanggal','<=',$tanggal)->where('status','open')->where('checkin','false')->get();
-        $count = 0;
-        return view('schedule.notif',compact('antrian','count'));
+        return view('schedule.notif',compact('antrian'));
     }
 
     /**
@@ -72,8 +71,6 @@ class QueueController extends Controller
     {
         $antri = Queue::where('id',$id)->get()->first();
         $post = Post::where('id',$antri->post_id)->get()->first();
-
-        $html = view('schedule.modal', compact('post'))->render();
-        return $html;
+        
     }
 }
